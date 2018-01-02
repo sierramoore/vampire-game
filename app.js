@@ -8,7 +8,7 @@ const vamp = {
     body: {},
     direction: "",
     initVamp: function (){
-        this.body = {x: 20, y: 400, r: 12.5, e: 0}
+        this.body = {x: 40, y: 400, r: 12.5, e: 0}
     },
     drawBody: function(){
     	ctx.beginPath();
@@ -27,17 +27,6 @@ const vamp = {
     //set range of windows to be generated with boundries
     //math random with range for amount of windows
     //keyframes scroll and animation not linear but left
-    randWindow: function(){
-        //random window between 1-10
-        let howMany = Math.floor(Math.random() * 10) + 1;
-        // random x or y position between 10-700
-        let randX = Math.floor(Math.random() * 600) + 10;
-        let randY = Math.floor(Math.random() * 600) + 10;
-        for(let i=0; i < howMany; i++){
-            ctx.fillRect(randX,randY,75,100);
-            ctx.fillStyle = "yellow";
-        }
-    },
      move: function(){
     	if(vamp.direction === 'right'){
     		if(vamp.body.x + 10 < 400){
@@ -84,13 +73,49 @@ document.addEventListener('keydown', function(event){
 	// console.log(key);
 });
 
+let windows = {
+    randWindow: function(){
+        let howMany = Math.floor(Math.random() * 10) + 1;
+        let randY = Math.floor(Math.random() * 600) + 10;
+        for(let i=0; i < howMany; i++){
+            ctx.fillRect(700,randY,75,100);
+            ctx.fillStyle = "yellow";
+        }
+    }
+};
+
+const game = {
+    windows: [],
+    // function to set random values and output/return/store window obbject in array of windows
+    generateWindow: function(){
+        //set properties
+        let x = 700;
+        let y = Math.floor(Math.random() * 600) + 10;
+        let width = Math.floor(Math.random() * 100) + 70;
+        let height = Math.floor(Math.random() * 150) + 100;
+        let color = ctx.fillStyle = "yellow";
+
+        //genertate window
+        let howMany = Math.floor(Math.random() * 5) + 1;
+        for(let i=0; i < howMany; i++){
+            let window = ctx.fillRect(x,y,width,height);
+            this.windows.push(window);
+        }
+    }
+};
+
+
 
 //have actions in this function to clear frame by frame as moving
 const animateCanvas = function(){
+    //erase canvas
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 	vamp.drawBody();
-	// vamp.randWindow();
-	window.requestAnimationFrame(animateCanvas)
+	game.generateWindow();
+
+	// updates the whole screen
+    window.requestAnimationFrame(animateCanvas)
 };
 
 animateCanvas();
@@ -99,7 +124,10 @@ animateCanvas();
 vamp.move();
 vamp.initVamp();
 vamp.drawBody();
-vamp.randWindow();
+
+//set event listeners to catch user interaction and set animation function
+setTimeout(game.generateWindow, 3000);
+
 
 
 
