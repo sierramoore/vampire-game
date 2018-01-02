@@ -13,13 +13,30 @@ const vamp = {
     drawBody: function(){
     	ctx.beginPath();
     	ctx.arc(vamp.body.x, vamp.body.y, vamp.body.r, vamp.body.e, Math.PI*2);
-    	ctx.strokeStyle = "green";
+    	ctx.strokeStyle = "white";
     	ctx.fill();
     	ctx.closePath();
     },
-    drawWindow: function(){
-        ctx.fillStyle = "yellow";
-        ctx.fillRect(100,300,75,100)
+    // drawWindow: function(){
+    //     ctx.fillStyle = "yellow";
+    //     ctx.fillRect(x,y,75,100)
+    //     // ctx.roundedRect(ctx, 12, 12, 150, 150, 15);
+    // },
+    // make multiple windows
+    //set space between windows
+    //set range of windows to be generated with boundries
+    //math random with range for amount of windows
+    //keyframes scroll and animation not linear but left
+    randWindow: function(){
+        //random window between 1-10
+        let howMany = Math.floor(Math.random() * 10) + 1;
+        // random x or y position between 10-700
+        let randX = Math.floor(Math.random() * 600) + 10;
+        let randY = Math.floor(Math.random() * 600) + 10;
+        for(let i=0; i < howMany; i++){
+            ctx.fillRect(randX,randY,75,100);
+            ctx.fillStyle = "yellow";
+        }
     },
      move: function(){
     	if(vamp.direction === 'right'){
@@ -64,7 +81,7 @@ document.addEventListener('keydown', function(event){
 		vamp.move();
 		vamp.drawBody();
 	}
-	console.log(key);
+	// console.log(key);
 });
 
 
@@ -72,16 +89,17 @@ document.addEventListener('keydown', function(event){
 const animateCanvas = function(){
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	vamp.drawBody();
-	vamp.drawWindow();
+	// vamp.randWindow();
 	window.requestAnimationFrame(animateCanvas)
 };
 
 animateCanvas();
 
+
 vamp.move();
 vamp.initVamp();
 vamp.drawBody();
-vamp.drawWindow();
+vamp.randWindow();
 
 
 
