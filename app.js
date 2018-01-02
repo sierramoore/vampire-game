@@ -73,16 +73,16 @@ document.addEventListener('keydown', function(event){
 	// console.log(key);
 });
 
-let windows = {
-    randWindow: function(){
-        let howMany = Math.floor(Math.random() * 10) + 1;
-        let randY = Math.floor(Math.random() * 600) + 10;
-        for(let i=0; i < howMany; i++){
-            ctx.fillRect(700,randY,75,100);
-            ctx.fillStyle = "yellow";
-        }
-    }
-};
+// let windows = {
+//     randWindow: function(){
+//         let howMany = Math.floor(Math.random() * 10) + 1;
+//         let randY = Math.floor(Math.random() * 600) + 10;
+//         for(let i=0; i < howMany; i++){
+//             ctx.fillRect(700,randY,75,100);
+//             ctx.fillStyle = "yellow";
+//         }
+//     }
+// };
 
 const game = {
     windows: [],
@@ -93,15 +93,37 @@ const game = {
         let y = Math.floor(Math.random() * 600) + 10;
         let width = Math.floor(Math.random() * 100) + 70;
         let height = Math.floor(Math.random() * 150) + 100;
-        let color = ctx.fillStyle = "yellow";
+        // let color = ctx.fillStyle = "yellow";
 
         //genertate window
-        let howMany = Math.floor(Math.random() * 5) + 1;
-        for(let i=0; i < howMany; i++){
-            let window = ctx.fillRect(x,y,width,height);
-            this.windows.push(window);
-        }
+        // let howMany = Math.floor(Math.random() * 5) + 1;
+        // for(let i=0; i < howMany; i++){
+        //     let window = ctx.fillRect(x,y,width,height);
+
+       let window = {
+           x: x,
+           y: y,
+           width: width,
+           height: height
+       };
+
+        // store window in windows array
+        this.windows.push(window);
+        console.log(this.windows)
+        // }
+    },
+    // show window on screen
+    showWindow: function(){
+
+        //get window object
+        let w = this.windows[0];
+
+        //print the window using properties of window object we just grabbed
+        ctx.fillStyle = "yellow";
+        ctx.fillRect(w.x,w.y,w.width,w.height);
+
     }
+
 };
 
 
@@ -111,14 +133,18 @@ const animateCanvas = function(){
     //erase canvas
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	vamp.drawBody();
-	game.generateWindow();
+    // this causes the hero to show on the screen
+    vamp.drawBody();
+
+	// this will make the window(s) show on the screen
+
 
 	// updates the whole screen
     window.requestAnimationFrame(animateCanvas)
 };
 
-animateCanvas();
+// animateCanvas();
+
 
 
 vamp.move();
@@ -126,7 +152,9 @@ vamp.initVamp();
 vamp.drawBody();
 
 //set event listeners to catch user interaction and set animation function
-setTimeout(game.generateWindow, 3000);
+// setTimeout(game.generateWindow(), 3000);
+
+
 
 
 
