@@ -17,16 +17,8 @@ const vamp = {
     	ctx.fill();
     	ctx.closePath();
     },
-    // drawWindow: function(){
-    //     ctx.fillStyle = "yellow";
-    //     ctx.fillRect(x,y,75,100)
-    //     // ctx.roundedRect(ctx, 12, 12, 150, 150, 15);
-    // },
-    // make multiple windows
     //set space between windows
     //set range of windows to be generated with boundries
-    //math random with range for amount of windows
-    //keyframes scroll and animation not linear but left
      move: function(){
     	if(vamp.direction === 'right'){
     		if(vamp.body.x + 10 < 400){
@@ -87,44 +79,60 @@ document.addEventListener('keydown', function(event){
 const game = {
     windows: [],
     // function to set random values and output/return/store window obbject in array of windows
-    generateWindow: function(){
+    generateWindow: function () {
         //set properties
+        //tried usigng loop to decrease x value
+        // let x = this.moveWindow();
         let x = 700;
         let y = Math.floor(Math.random() * 600) + 10;
         let width = Math.floor(Math.random() * 100) + 70;
         let height = Math.floor(Math.random() * 150) + 100;
         // let color = ctx.fillStyle = "yellow";
 
-        //genertate window
-        // let howMany = Math.floor(Math.random() * 5) + 1;
-        // for(let i=0; i < howMany; i++){
-        //     let window = ctx.fillRect(x,y,width,height);
-
-       let window = {
-           x: x,
-           y: y,
-           width: width,
-           height: height
-       };
-
+        let window = {
+            x: x,
+            y: y,
+            width: width,
+            height: height
+        };
         // store window in windows array
         this.windows.push(window);
         console.log(this.windows)
-        // }
     },
     // show window on screen
-    showWindow: function(){
-
+    showWindow: function () {
         //get window object
         let w = this.windows[0];
-
         //print the window using properties of window object we just grabbed
         ctx.fillStyle = "yellow";
-        ctx.fillRect(w.x,w.y,w.width,w.height);
+        ctx.fillRect(w.x, w.y, w.width, w.height);
 
+    },
+    //need to decrease x
+    moveWindow: function(){
+        // //decrement x's value
+        //need to start x with 700 then --
+        // x =this.windows[0].x
+        let x = 0;
+        for(let i=700; i >= 0; i--){
+            x = i;
+            console.log(x)
+        }
+    },
+
+    //  //decrease x for all the windows ("move the windows to the left")
+    moveWindow2: function(){
+
+        //update all the values of x in windows arr
+        for(let i=0; i < this.windows.length; i++){
+            let xValue = this.windows[i].x;
+            //update value of x in window arr
+            this.windows[i].x = xValue -1;
+        }
     }
-
 };
+//need to generate window before show window
+game.generateWindow();
 
 
 
@@ -136,20 +144,24 @@ const animateCanvas = function(){
     // this causes the hero to show on the screen
     vamp.drawBody();
 
+
 	// this will make the window(s) show on the screen
+    game.showWindow();
 
+    //call a function to slowly decrease x as page refreshes
+	game.moveWindow2();
 
-	// updates the whole screen
+    // updates the whole screen
     window.requestAnimationFrame(animateCanvas)
 };
 
-// animateCanvas();
-
+animateCanvas();
 
 
 vamp.move();
 vamp.initVamp();
 vamp.drawBody();
+
 
 //set event listeners to catch user interaction and set animation function
 // setTimeout(game.generateWindow(), 3000);
