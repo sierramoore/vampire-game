@@ -19,21 +19,27 @@ const vamp = {
     },
     //set space between windows
     //set range of windows to be generated with boundries
+    //if within canvas boundry -> if statements
      move: function(){
     	if(vamp.direction === 'right'){
-    		if(vamp.body.x + 10 < 400){
+    		if(vamp.body.x + 20 < 800){
     		    // move hero right along x axis
     		vamp.body = {x: vamp.body.x + 10, y: vamp.body.y, r: 12.5, e:0}
     		}
     		
     	}else if(vamp.direction === "left"){
-    		// move left from x axis
+            if(vamp.body.x >= 20)
+            // move left from x axis
     		vamp.body = {x: vamp.body.x - 10, y: vamp.body.y, r: 12.5, e:0}
 
     	}else if(vamp.direction === "up"){
+    	    //set to 200px so cant move above dark area
+    	    if(vamp.body.y >=200)
     		vamp.body = {x: vamp.body.x, y: vamp.body.y - 10, r: 12.5, e:0}
 
     	}else if(vamp.direction === "down"){
+    	    //set to only move within dark grey area
+    	    if(vamp.body.y <= 600)
     		vamp.body = {x: vamp.body.x, y: vamp.body.y + 10, r: 12.5, e:0}
     	}
     }
@@ -84,7 +90,8 @@ const game = {
         //tried usigng loop to decrease x value
         // let x = this.moveWindow();
         let x = 700;
-        let y = Math.floor(Math.random() * 600) + 10;
+        //if y between 200 & 600 px
+        let y = Math.floor(Math.random() * 400) + 100;
         let width = Math.floor(Math.random() * 100) + 70;
         let height = Math.floor(Math.random() * 150) + 100;
         // let color = ctx.fillStyle = "yellow";
@@ -127,13 +134,14 @@ const game = {
         for(let i=0; i < this.windows.length; i++){
             let xValue = this.windows[i].x;
             //update value of x in window arr
-            this.windows[i].x = xValue -1;
+            this.windows[i].x = xValue -2;
         }
     }
 };
 //need to generate window before show window
-game.generateWindow();
 
+
+game.generateWindow();
 
 
 //have actions in this function to clear frame by frame as moving
@@ -143,8 +151,7 @@ const animateCanvas = function(){
 
     // this causes the hero to show on the screen
     vamp.drawBody();
-
-
+    
 	// this will make the window(s) show on the screen
     game.showWindow();
 

@@ -2,7 +2,7 @@ canvas{
     /*width: 800px;*/
     /*height: 800px;*/
 
-    background: linear-gradient(#848484, #2a2a2a, #1d1d1d, #1d1d1d, #2a2a2a, #848484);
+    background: linear-gradient(darkred, #2a2a2a, #1d1d1d, #1d1d1d, #2a2a2a, darkred);
 }
 h1{
     font-family: 'Berkshire Swash', cursive;
