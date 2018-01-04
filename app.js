@@ -70,7 +70,6 @@ document.addEventListener('keydown', function(event){
 	// console.log(key);
 });
 document.addEventListener('keyup', function(event){
-    // console.log("sldkfj")
     let key = event.which;
 
     if(key === 39){
@@ -87,17 +86,6 @@ document.addEventListener('keyup', function(event){
     }
     // console.log(key);
 });
-
-// let windows = {
-//     randWindow: function(){
-//         let howMany = Math.floor(Math.random() * 10) + 1;
-//         let randY = Math.floor(Math.random() * 600) + 10;
-//         for(let i=0; i < howMany; i++){
-//             ctx.fillRect(700,randY,75,100);
-//             ctx.fillStyle = "yellow";
-//         }
-//     }
-// };
 
 const game = {
     windows: [],
@@ -140,7 +128,7 @@ const game = {
             //update value of x in window arr
             this.windows[i].x = xValue -3;
         }
-    }
+    },
     addWindows: function() {
         // console.log(this.windows.slice(-1)[0])
         let lastWindow = this.windows[this.windows.length - 1];
@@ -155,21 +143,21 @@ const game = {
         if(lastWindow === -170){
             this.windows.pop(lastWindow);
         }
-
-
-
-
-
-        // //if the window has left the screen remove it from array
-        // if (xValue === -170) {
-        //     this.windows.shift(xValue);
-        // }
     },
 
-    checkForCollision: function() {
-        //if ?? player hits any elment in windows arr
-
-            alert("dead");
+    // return true if the specified rectangle collides with at least one window
+    // otherwise return false
+    checkForCollision: function (x, y, w, h) {
+        //return true if collision found
+        for (let i = 0; i < this.windows.length; i++) {
+            let c = this.windows[i];
+            //check if vamp(params of this function) and first window collided
+            if(isOverlapped(x, y, w, h, c.x, c.y, c.width, c.height)){
+                console.log("dead");
+                return true;
+            }
+        }
+        return false;
     }
 };
 
@@ -184,6 +172,9 @@ const animateCanvas = function(){
 	game.addWindows();
 
 	vamp.move();
+
+	//check for collision as a calculated as a square
+	game.checkForCollision(vamp.body.x - vamp.body.r, vamp.body.y - vamp.body.r, vamp.body.r * 2, vamp.body.r * 2);
     //erase canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
