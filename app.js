@@ -18,8 +18,8 @@ const vamp = {
     },
     drawBody: function(){
     	ctx.beginPath();
+        ctx.fillStyle = "white";
     	ctx.arc(vamp.body.x, vamp.body.y, vamp.body.r, vamp.body.e, Math.PI*2);
-    	ctx.strokeStyle = "white";
     	ctx.fill();
     	ctx.closePath();
     },
@@ -89,7 +89,7 @@ document.addEventListener('keyup', function(event){
 
 const game = {
     windows: [],
-    // function to set random values and output/return/store window obbject in array of windows
+    // function to set random values and output/return/store window object in array of windows
     generateWindow: function () {
         //set properties
         let x = 700;
@@ -97,7 +97,6 @@ const game = {
         let y = Math.floor(Math.random() * 400) + 80;
         let width = Math.floor(Math.random() * 100) + 70;
         let height = Math.floor(Math.random() * 150) + 120;
-        // let color = ctx.fillStyle = "yellow";
 
         let window = {
             x: x,
@@ -158,6 +157,31 @@ const game = {
             }
         }
         return false;
+    },
+
+    score: 0,
+    drawScore: function () {
+        ctx.font = "24px 'Berkshire Swash'";
+        ctx.fillStyle = "red";
+        ctx.fillText("Score: " + this.score, 50, 750);
+    },
+
+    keepScore: function (){
+        //for each second -> score = score + 1
+    },
+
+    health: 10,
+    drawHealthBar: function (){
+        ctx.fillStyle = "red";
+        ctx.strokeStyle="black";
+        ctx.strokeRect(600, 735, 101, 21)
+        // ctx.borderColor = "2px solid black";
+        ctx.fillRect(600, 735, 100, 20);
+    },
+    measureHealth: function (){
+        //for each  collision decrement health by 1
+
+        //if health is decreased update drawHealthBar fill style to be gradient
     }
 };
 
@@ -181,6 +205,9 @@ const animateCanvas = function(){
     // this causes the hero to show on the screen
     vamp.drawBody();
 
+    game.drawScore();
+    game.drawHealthBar();
+
 	// this will make the window(s) show on the screen
     game.showWindow();
 
@@ -193,11 +220,6 @@ const animateCanvas = function(){
 vamp.initVamp();
 
 animateCanvas();
-
-
-// vamp.move();
-// vamp.drawBody();
-
 
 //set event listeners to catch user interaction and set animation function
 
