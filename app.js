@@ -15,6 +15,7 @@ const vamp = {
     y:400,
     w: 40,
     h: 40,
+
     body: {},
     direction: "",
     initVamp: function (){
@@ -25,6 +26,7 @@ const vamp = {
         img.src = "images/vampy.png";
         // img.src = "https://st.depositphotos.com/3248189/4472/v/950/depositphotos_44727327-stock-illustration-cartoon-vampire-bat.jpg";
         ctx.drawImage(img, this.x, this.y, this.w, this.h)
+
     },
     // drawBody: function(){
     // 	ctx.beginPath();
@@ -102,8 +104,8 @@ const game = {
     windows: [],
     // function to set random values and output/return/store window object in array of windows
     generateWindow: function () {
+        //makes vampire appear before windows
         ctx.globalCompositeOperation='destination-over';
-        //set properties
         let x = 700;
         //if y between red borders
         let y = Math.floor(Math.random() * 400) + 80;
@@ -166,6 +168,7 @@ const game = {
             let c = this.windows[i];
             //check if vamp(params of this function) and first window collided
             if(isOverlapped(x, y, w, h, c.x, c.y, c.width, c.height)){
+
                 this.health = this.health - 1;
                 ctx.fillRect(600, 735, this.health, 20);
 
@@ -215,7 +218,8 @@ const animateCanvas = function(){
 	vamp.move();
 
 	//check for collision as a calculated as a square
-	game.checkForCollision(vamp.body.x - vamp.body.r, vamp.body.y - vamp.body.r, vamp.body.r * 2, vamp.body.r * 2);
+	// game.checkForCollision(vamp.body.x - vamp.body.r, vamp.body.y - vamp.body.r, vamp.body.r * 2, vamp.body.r * 2);
+    game.checkForCollision(vamp.x, vamp.y, vamp.w, vamp.h);
     //erase canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
