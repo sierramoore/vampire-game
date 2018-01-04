@@ -46,6 +46,7 @@ const vamp = {
 };
 
 document.addEventListener('keydown', function(event){
+    // console.log("sldkfj")
 	let key = event.which;
 	
 	if(key === 39){
@@ -87,10 +88,8 @@ const game = {
     // function to set random values and output/return/store window obbject in array of windows
     generateWindow: function () {
         //set properties
-        //tried usigng loop to decrease x value
-        // let x = this.moveWindow();
         let x = 700;
-        //if y between 200 & 600 px
+        //if y between red borders
         let y = Math.floor(Math.random() * 400) + 100;
         let width = Math.floor(Math.random() * 100) + 70;
         let height = Math.floor(Math.random() * 150) + 100;
@@ -104,31 +103,20 @@ const game = {
         };
         // store window in windows array
         this.windows.push(window);
-        console.log(this.windows)
+        // console.log(this.windows)
     },
     // show window on screen
     showWindow: function () {
-        //get window object
-        let w = this.windows[0];
-        //print the window using properties of window object we just grabbed
-        ctx.fillStyle = "yellow";
-        ctx.fillRect(w.x, w.y, w.width, w.height);
-
-    },
-    //need to decrease x
-    moveWindow: function(){
-        // //decrement x's value
-        //need to start x with 700 then --
-        // x =this.windows[0].x
-        let x = 0;
-        for(let i=700; i >= 0; i--){
-            x = i;
-            console.log(x)
+        //get window object and print the window using properties of window object just grabbed in for loop
+        //loop through windows array and print them all
+        for (let i = 0; i < this.windows.length; i++) {
+            let w = this.windows[i];
+            ctx.fillStyle = "yellow";
+            ctx.fillRect(w.x, w.y, w.width, w.height);
         }
     },
-
     //  //decrease x for all the windows ("move the windows to the left")
-    moveWindow2: function(){
+    moveWindow: function(){
 
         //update all the values of x in windows arr
         for(let i=0; i < this.windows.length; i++){
@@ -136,10 +124,38 @@ const game = {
             //update value of x in window arr
             this.windows[i].x = xValue -2;
         }
+    },
+    addWindows: function() {
+        // console.log(this.windows.slice(-1)[0])
+        let lastWindow = this.windows[this.windows.length - 1];
+        // if previous window is at x = 400
+        //get last elem of arr
+        if (lastWindow.x  === 400) {
+
+            this.generateWindow()
+        }
+
+        // console.log(this.windows[0].x)
+        if(lastWindow === -170){
+            this.windows.pop(lastWindow);
+        }
+
+
+
+
+
+        // //if the window has left the screen remove it from array
+        // if (xValue === -170) {
+        //     this.windows.shift(xValue);
+        // }
+    },
+
+    checkForCollision: function() {
+        //if ?? player hits any elment in windows arr
+
+            alert("dead");
     }
 };
-//need to generate window before show window
-
 
 game.generateWindow();
 
@@ -151,27 +167,32 @@ const animateCanvas = function(){
 
     // this causes the hero to show on the screen
     vamp.drawBody();
-    
+
 	// this will make the window(s) show on the screen
     game.showWindow();
 
     //call a function to slowly decrease x as page refreshes
-	game.moveWindow2();
+	game.moveWindow();
+
+	game.addWindows();
+
+	// game.checkForCollision();
 
     // updates the whole screen
     window.requestAnimationFrame(animateCanvas)
 };
 
+vamp.initVamp();
+
 animateCanvas();
 
 
-vamp.move();
-vamp.initVamp();
-vamp.drawBody();
+// vamp.move();
+// vamp.drawBody();
 
 
 //set event listeners to catch user interaction and set animation function
-// setTimeout(game.generateWindow(), 3000);
+
 
 
 
