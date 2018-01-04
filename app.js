@@ -155,9 +155,12 @@ const game = {
             //check if vamp(params of this function) and first window collided
             if(isOverlapped(x, y, w, h, c.x, c.y, c.width, c.height)){
                 this.health = this.health - 1;
+                ctx.fillRect(600, 735, this.health, 20);
+
                 if(this.health === 0){
                     //make vamp catch fire if time
                     //or stop with game over image
+                    ctx.strokeRect(600, 735, 101, 21);
                     console.log("dead");
                 }
                 return true;
@@ -176,27 +179,13 @@ const game = {
     health: 50,
     drawHealthBar: function (){
         ctx.fillStyle = "red";
-        //border color
+        //BORDER color
         ctx.strokeStyle= "black";
-        //border
+
+        //BORDER
         ctx.strokeRect(600, 735, 101, 21);
-        ctx.fillRect(600, 735, 100, 20);
-
-        for (let i = 0; i < this.windows.length; i++) {
-            let c = this.windows[i];
-
-            if(isOverlapped(vamp.body.x - vamp.body.r, vamp.body.y - vamp.body.r, vamp.body.r * 2, vamp.body.r * 2, c.x, c.y, c.width, c.height)){
-                //effects length of gradient
-                let grd = ctx.createLinearGradient(0,0,250,0);
-                ctx.fillStyle = grd;
-                grd.addColorStop(0,"red");
-                grd.addColorStop(1,"white");
-
-
-                ctx.fillRect(600, 735, 100, 20);
-            }
-
-        }
+        //can multiply health to make bar longer w/o changing literal health amount
+        ctx.fillRect(600, 735, this.health * 2, 20);
 
     },
 };
@@ -218,11 +207,20 @@ const animateCanvas = function(){
     //erase canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // this causes the hero to show on the screen
+    // this causes the vamp to show on the screen
     vamp.drawBody();
 
     game.drawScore();
+
     game.drawHealthBar();
+
+    if(game.health === 0){
+
+        ctx.font = "80px 'Berkshire Swash'";
+        ctx.fillStyle = "red";
+        ctx.fillText("Game Over",200,400);
+        return game.drawHealthBar();
+    }
 
 	// this will make the window(s) show on the screen
     game.showWindow();
