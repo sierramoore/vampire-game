@@ -106,7 +106,9 @@ const game = {
         };
         // store window in windows array
         this.windows.push(window);
-        // console.log(this.windows)
+
+        // add 1 point to score for each generated window
+        this.score = this.score + 1;
     },
     // show window on screen
     showWindow: function () {
@@ -152,37 +154,51 @@ const game = {
             let c = this.windows[i];
             //check if vamp(params of this function) and first window collided
             if(isOverlapped(x, y, w, h, c.x, c.y, c.width, c.height)){
-                console.log("dead");
+                this.health = this.health - 1;
+                if(this.health === 0){
+                    //make vamp catch fire if time
+                    //or stop with game over image
+                    console.log("dead");
+                }
                 return true;
             }
         }
         return false;
     },
 
-    score: 0,
+    score: -1,
     drawScore: function () {
         ctx.font = "24px 'Berkshire Swash'";
         ctx.fillStyle = "red";
         ctx.fillText("Score: " + this.score, 50, 750);
     },
 
-    keepScore: function (){
-        //for each second -> score = score + 1
-    },
-
-    health: 10,
+    health: 50,
     drawHealthBar: function (){
         ctx.fillStyle = "red";
-        ctx.strokeStyle="black";
-        ctx.strokeRect(600, 735, 101, 21)
-        // ctx.borderColor = "2px solid black";
+        //border color
+        ctx.strokeStyle= "black";
+        //border
+        ctx.strokeRect(600, 735, 101, 21);
         ctx.fillRect(600, 735, 100, 20);
-    },
-    measureHealth: function (){
-        //for each  collision decrement health by 1
 
-        //if health is decreased update drawHealthBar fill style to be gradient
-    }
+        for (let i = 0; i < this.windows.length; i++) {
+            let c = this.windows[i];
+
+            if(isOverlapped(vamp.body.x - vamp.body.r, vamp.body.y - vamp.body.r, vamp.body.r * 2, vamp.body.r * 2, c.x, c.y, c.width, c.height)){
+                //effects length of gradient
+                let grd = ctx.createLinearGradient(0,0,250,0);
+                ctx.fillStyle = grd;
+                grd.addColorStop(0,"red");
+                grd.addColorStop(1,"white");
+
+
+                ctx.fillRect(600, 735, 100, 20);
+            }
+
+        }
+
+    },
 };
 
 game.generateWindow();
