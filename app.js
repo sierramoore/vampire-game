@@ -4,6 +4,12 @@ const canvas = document.getElementById('vampcanvas');
 const ctx = canvas.getContext('2d');
 console.log(ctx);
 
+let isOverlapped = function(x1,y1,w1,h1,x2,y2,w2,h2){
+    //horizontal check first two && && vertical check last two
+    //checks for true or false and returns that value
+    return  x1 < x2 + w2 && x2 < x1 + w1 && y1 < y2 + h2 && y2 < y1 + h1;
+};
+
 const vamp = {
     body: {},
     direction: "",
@@ -51,25 +57,35 @@ document.addEventListener('keydown', function(event){
 	
 	if(key === 39){
 		vamp.direction = "right";
-		vamp.move();
-		vamp.drawBody();
 
 	}else if (key === 37){
 		vamp.direction = "left";
-		vamp.move();
-		vamp.drawBody();
 
 	}else if (key === 38){
 		vamp.direction = "up";
-		vamp.move();
-		vamp.drawBody();
 
 	}else if (key === 40){
 		vamp.direction = "down";
-		vamp.move();
-		vamp.drawBody();
 	}
 	// console.log(key);
+});
+document.addEventListener('keyup', function(event){
+    // console.log("sldkfj")
+    let key = event.which;
+
+    if(key === 39){
+        vamp.direction = "";
+
+    }else if (key === 37){
+        vamp.direction = "";
+
+    }else if (key === 38){
+        vamp.direction = "";
+
+    }else if (key === 40){
+        vamp.direction = "";
+    }
+    // console.log(key);
 });
 
 // let windows = {
@@ -90,9 +106,9 @@ const game = {
         //set properties
         let x = 700;
         //if y between red borders
-        let y = Math.floor(Math.random() * 400) + 100;
+        let y = Math.floor(Math.random() * 400) + 80;
         let width = Math.floor(Math.random() * 100) + 70;
-        let height = Math.floor(Math.random() * 150) + 100;
+        let height = Math.floor(Math.random() * 150) + 120;
         // let color = ctx.fillStyle = "yellow";
 
         let window = {
@@ -122,9 +138,9 @@ const game = {
         for(let i=0; i < this.windows.length; i++){
             let xValue = this.windows[i].x;
             //update value of x in window arr
-            this.windows[i].x = xValue -2;
+            this.windows[i].x = xValue -3;
         }
-    },
+    }
     addWindows: function() {
         // console.log(this.windows.slice(-1)[0])
         let lastWindow = this.windows[this.windows.length - 1];
@@ -162,19 +178,20 @@ game.generateWindow();
 
 //have actions in this function to clear frame by frame as moving
 const animateCanvas = function(){
+    //call a function to slowly decrease x as page refreshes
+    game.moveWindow();
+
+	game.addWindows();
+
+	vamp.move();
     //erase canvas
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // this causes the hero to show on the screen
     vamp.drawBody();
 
 	// this will make the window(s) show on the screen
     game.showWindow();
-
-    //call a function to slowly decrease x as page refreshes
-	game.moveWindow();
-
-	game.addWindows();
 
 	// game.checkForCollision();
 
