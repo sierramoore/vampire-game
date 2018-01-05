@@ -92,12 +92,18 @@ class Game {
         this.windows = [];
         this.score = -1;
         this.health =  50;
+        this.imgWindow = new Image();
+        this.imgWindow.src = "images/window1.png";
+        this.imgBackground = new Image();
+        this.imgBackground.src = "images/wall.jpg";
+        this.imgEnd = new Image();
+        this.imgEnd.src = "images/background3.png";
     }
 
     // function to set random values and output/return/store window object in array of windows
     generateWindow() {
         //makes vampire appear over windows
-        ctx.globalCompositeOperation='destination-over';
+        // ctx.globalCompositeOperation='destination-over';
         let x = 700;
         //if y between red borders
         let y = Math.floor(Math.random() * 400) + 80;
@@ -117,15 +123,15 @@ class Game {
         this.score = this.score + 1;
     };
     // show window on screen
-    showWindow() {
+    drawWindows() {
+        // ctx.globalCompositeOperation='destination-over';
+        ctx.drawImage(this.imgBackground, 0,0, 800, 800)
+
         //get window object and print the window using properties of window object just grabbed in for loop
         //loop through windows array and print them all
         for (let i = 0; i < this.windows.length; i++) {
             let w = this.windows[i];
-
-            let img = new Image();
-            img.src = "images/window1.png";
-            ctx.drawImage(img, w.x, w.y, w.width, w.height)
+            ctx.drawImage(this.imgWindow, w.x, w.y, w.width, w.height)
         }
     };
     //  //decrease x for all the windows ("move the windows to the left")
@@ -193,6 +199,14 @@ class Game {
         ctx.fillRect(600, 735, this.health * 2, 20);
 
     };
+    drawGameOver(){
+
+        ctx.drawImage(this.imgEnd, 0, 0, 800, 800);
+
+        ctx.font = "80px 'Berkshire Swash'";
+        ctx.fillStyle = "red";
+        ctx.fillText("Game Over",200,400);
+    }
 }
 //creates an obj of the class Game
 const game = new Game();
@@ -201,43 +215,25 @@ game.generateWindow();
 
 //have actions in this function to clear frame by frame as moving
 const animateCanvas = function(){
-    //call a function to slowly decrease x as page refreshes
-    game.moveWindow();
+	// this will make the window(s) show on the screen
+    if(game.health > 0){
+        game.moveWindow();
+        game.addWindows();
+        vamp.move();
+        game.checkForCollision(vamp.x, vamp.y, vamp.w, vamp.h);
+        game.drawWindows();
+    }else{
+        game.drawGameOver();
+    }
 
-	game.addWindows();
-
-	vamp.move();
-
-	//check for collision as a calculated as a square
-	// game.checkForCollision(vamp.body.x - vamp.body.r, vamp.body.y - vamp.body.r, vamp.body.r * 2, vamp.body.r * 2);
-    game.checkForCollision(vamp.x, vamp.y, vamp.w, vamp.h);
-    //erase canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // this causes the vamp to show on the screen
     // vamp.drawBody();
     vamp.vampImage();
 
     game.drawScore();
-
     game.drawHealthBar();
 
-    if(game.health === 0){
-        ctx.font = "80px 'Berkshire Swash'";
-        ctx.fillStyle = "red";
-        ctx.fillText("Game Over",200,400);
-
-        let img = new Image();
-        img.src = "images/background.png";
-        ctx.drawImage(img, 0, 0, 800, 800);
-
-        return game.drawHealthBar();
-    }
-
-	// this will make the window(s) show on the screen
-    game.showWindow();
-
-	// game.checkForCollision();
 
     // updates the whole screen
     window.requestAnimationFrame(animateCanvas)
