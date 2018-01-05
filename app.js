@@ -113,7 +113,7 @@ class Game {
     generateWindow() {
         //makes vampire appear over windows
         let width = Math.floor(Math.random() * 100) + 70;
-        let height = Math.floor(Math.random() * 250) + 120;
+        let height = Math.floor(Math.random() * (380 - 200)) + 200;
         let x = canvas.width;
         //if y between borders and -window height to ensure window doesnt start and bottom border and overlap into border
         let y = Math.floor(Math.random() * (canvas.height - 2*screenBorder - height)) + screenBorder;
@@ -169,7 +169,8 @@ class Game {
         let lastWindow = this.windows[this.windows.length - 1];
         // if previous window is at x = 400
         //get last elem of arr
-        if (lastWindow.x  === 400) {
+        //start generating more windows when
+        if (lastWindow.x  === 300) {
 
             this.generateWindow()
         }
