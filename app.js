@@ -13,8 +13,8 @@ let isOverlapped = function(x1,y1,w1,h1,x2,y2,w2,h2){
 const vamp = {
     x: 40,
     y:400,
-    w: 40,
-    h: 40,
+    w: 45,
+    h: 50,
 
     body: {},
     direction: "",
@@ -24,19 +24,9 @@ const vamp = {
     vampImage: function (){
         let img = new Image();
         img.src = "images/vampy.png";
-        // img.src = "https://st.depositphotos.com/3248189/4472/v/950/depositphotos_44727327-stock-illustration-cartoon-vampire-bat.jpg";
         ctx.drawImage(img, this.x, this.y, this.w, this.h)
 
     },
-    // drawBody: function(){
-    // 	ctx.beginPath();
-    //     ctx.fillStyle = "white";
-    // 	ctx.arc(vamp.body.x, vamp.body.y, vamp.body.r, vamp.body.e, Math.PI*2);
-    // 	ctx.fill();
-    // 	ctx.closePath();
-    // },
-    //set space between windows
-    //set range of windows to be generated with boundries
     //if within canvas boundry -> if statements
      move: function(){
     	if(this.direction === 'right'){
@@ -65,7 +55,6 @@ const vamp = {
 };
 
 document.addEventListener('keydown', function(event){
-    // console.log("sldkfj")
 	let key = event.which;
 	
 	if(key === 39){
@@ -80,7 +69,6 @@ document.addEventListener('keydown', function(event){
 	}else if (key === 40){
 		vamp.direction = "down";
 	}
-	// console.log(key);
 });
 document.addEventListener('keyup', function(event){
     let key = event.which;
@@ -94,17 +82,16 @@ document.addEventListener('keyup', function(event){
     }else if (key === 38){
         vamp.direction = "";
 
-    }else if (key === 40){
+    }else if (key === 40) {
         vamp.direction = "";
     }
-    // console.log(key);
 });
 
 const game = {
     windows: [],
     // function to set random values and output/return/store window object in array of windows
     generateWindow: function () {
-        //makes vampire appear before windows
+        //makes vampire appear over windows
         ctx.globalCompositeOperation='destination-over';
         let x = 700;
         //if y between red borders
@@ -130,8 +117,10 @@ const game = {
         //loop through windows array and print them all
         for (let i = 0; i < this.windows.length; i++) {
             let w = this.windows[i];
-            ctx.fillStyle = "yellow";
-            ctx.fillRect(w.x, w.y, w.width, w.height);
+
+            let img = new Image();
+            img.src = "images/window1.png";
+            ctx.drawImage(img, w.x, w.y, w.width, w.height)
         }
     },
     //  //decrease x for all the windows ("move the windows to the left")
