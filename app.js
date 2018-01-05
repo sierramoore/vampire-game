@@ -87,10 +87,15 @@ document.addEventListener('keyup', function(event){
     }
 });
 
-const game = {
-    windows: [],
+class Game {
+    constructor(){
+        this.windows = [];
+        this.score = -1;
+        this.health =  50;
+    }
+
     // function to set random values and output/return/store window object in array of windows
-    generateWindow: function () {
+    generateWindow() {
         //makes vampire appear over windows
         ctx.globalCompositeOperation='destination-over';
         let x = 700;
@@ -110,9 +115,9 @@ const game = {
 
         // add 1 point to score for each generated window
         this.score = this.score + 1;
-    },
+    };
     // show window on screen
-    showWindow: function () {
+    showWindow() {
         //get window object and print the window using properties of window object just grabbed in for loop
         //loop through windows array and print them all
         for (let i = 0; i < this.windows.length; i++) {
@@ -122,9 +127,9 @@ const game = {
             img.src = "images/window1.png";
             ctx.drawImage(img, w.x, w.y, w.width, w.height)
         }
-    },
+    };
     //  //decrease x for all the windows ("move the windows to the left")
-    moveWindow: function(){
+    moveWindow(){
 
         //update all the values of x in windows arr
         for(let i=0; i < this.windows.length; i++){
@@ -132,8 +137,8 @@ const game = {
             //update value of x in window arr
             this.windows[i].x = xValue -4;
         }
-    },
-    addWindows: function() {
+    };
+    addWindows() {
         // console.log(this.windows.slice(-1)[0])
         let lastWindow = this.windows[this.windows.length - 1];
         // if previous window is at x = 400
@@ -147,11 +152,11 @@ const game = {
         if(lastWindow === -170){
             this.windows.pop(lastWindow);
         }
-    },
+    };
 
     // return true if the specified rectangle collides with at least one window
     // otherwise return false
-    checkForCollision: function (x, y, w, h) {
+    checkForCollision(x, y, w, h) {
         //return true if collision found
         for (let i = 0; i < this.windows.length; i++) {
             let c = this.windows[i];
@@ -171,29 +176,26 @@ const game = {
             }
         }
         return false;
-    },
-
-    score: -1,
-    drawScore: function () {
+    };
+    drawScore() {
         ctx.font = "24px 'Berkshire Swash'";
         ctx.fillStyle = "red";
         ctx.fillText("Score: " + this.score, 50, 750);
-    },
-
-    health: 50,
-    drawHealthBar: function (){
+    };
+    drawHealthBar(){
         ctx.fillStyle = "red";
         //BORDER color
-        ctx.strokeStyle= "black";
+        ctx.strokeStyle= "red";
 
         //BORDER
         ctx.strokeRect(600, 735, 101, 21);
         //can multiply health to make bar longer w/o changing literal health amount
         ctx.fillRect(600, 735, this.health * 2, 20);
 
-    },
-};
-
+    };
+}
+//creates an obj of the class Game
+const game = new Game();
 game.generateWindow();
 
 
@@ -224,6 +226,11 @@ const animateCanvas = function(){
         ctx.font = "80px 'Berkshire Swash'";
         ctx.fillStyle = "red";
         ctx.fillText("Game Over",200,400);
+
+        let img = new Image();
+        img.src = "images/background.png";
+        ctx.drawImage(img, 0, 0, 800, 800);
+
         return game.drawHealthBar();
     }
 
