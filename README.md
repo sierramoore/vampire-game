@@ -12,9 +12,9 @@ as they will quickly decrease your health. The further you make it the higher sc
 I decided to make a game similar to a helicopter obstacle game I used to play as a kid.
 I went with a vampire avoiding sunny windows because when I thought it silly and unordinary.
 I have more ideas I would like to come back to later to implement like:
-** Townspeople throwing garlic at the vampire to keep him avoiding more objects
-** Having a certain few Townspeople the vampire can suck blood from to increase his health
-** Having dark windows that would not effect the vampires health to confuse the player
+..* Townspeople throwing garlic at the vampire to keep him avoiding more objects
+..* Having a certain few Townspeople the vampire can suck blood from to increase his health
+..* Having dark windows that would not effect the vampires health to confuse the player
 
 #### What did I learn in the process?
 This was my first time using Canvas and through making this game learned a lot about
