@@ -101,7 +101,7 @@ class Game {
         //is x property of canvas tiling
         this.backgroundPosX = 0;
         this.imgBackground = new Image();
-        this.imgBackground.src = "images/wall.jpg";
+        this.imgBackground.src = "images/wall.JPG";
         this.imgEnd = new Image();
         this.imgEnd.src = "images/background3.png";
         this.generateWindow();
