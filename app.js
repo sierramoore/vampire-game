@@ -4,7 +4,6 @@ const canvas = document.getElementById('vampcanvas');
 const ctx = canvas.getContext('2d');
 //const var bkus vamp needs it too
 const screenBorder = 120;
-// console.log(ctx);
 
 let isOverlapped = function(x1,y1,w1,h1,x2,y2,w2,h2){
     //horizontal check first two && && vertical check last two
@@ -153,13 +152,13 @@ class Game {
     };
     //  //decrease x for all the windows ("move the windows to the left")
     moveWindow(){
-
         //update all the values of x in windows arr
         for(let i=0; i < this.windows.length; i++){
             //update value of x in window arr
             this.windows[i].x -= this.speed;
         }
 
+        //have the background img move as windows move
         this.backgroundPosX -= this.speed;
         //modulo resets position back to near start when it is out of frame
         this.backgroundPosX %= canvas.width;
@@ -167,15 +166,13 @@ class Game {
     };
     addWindows() {
         let lastWindow = this.windows[this.windows.length - 1];
-        // if previous window is at x = 400
-        //get last elem of arr
+
         //start generating more windows when
         if (lastWindow.x  === 300) {
 
             this.generateWindow()
         }
-
-        // console.log(this.windows[0].x)
+        //if window is off screen then remove from window array
         if(lastWindow === -170){
             this.windows.pop(lastWindow);
         }
@@ -191,11 +188,10 @@ class Game {
             if(isOverlapped(x, y, w, h, c.x, c.y, c.width, c.height)){
 
                 this.health = this.health - 1;
+                //fill the healthbar with color and decrease the length as health decreases
                 ctx.fillRect(600, 735, this.health, 20);
 
                 if(this.health === 0){
-                    //make vamp catch fire if time
-                    //or stop with game over image
                     ctx.strokeRect(600, 735, 101, 21);
                     console.log("dead");
                 }
