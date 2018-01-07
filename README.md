@@ -1,6 +1,6 @@
 
-##~Vampire Avoiding Sunlit Windows Game~
-** Hosted on https://sierramoore.github.io/vampire-game/
+## Vampire Avoiding Sunlit Windows Game
+Hosted on https://sierramoore.github.io/vampire-game/
 
 ### What is this?
 #### This is a 2D Canvas Game avoiding obstacle game, set in the side perspective
