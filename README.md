@@ -3,12 +3,10 @@
 Hosted on https://sierramoore.github.io/vampire-game/
 
 ### What is this?
-#### This is a 2D Canvas Game avoiding obstacle game, set in the side perspective
-moving to the right. The goal is to last as long as you can avoiding windows,
-as they will quickly decrease your health. The further you make it the higher score you'll get.
+This is a 2D Canvas Game avoiding obstacle game, set in the side perspective moving to the right. The goal is to last as long as you can avoiding windows, as they will quickly decrease your health. The further you make it the higher score you'll get.
 
 ### Why Did I make this?
-#### This is my first project for General Assembly's Web Development Immersive program.
+This is my first project for General Assembly's Web Development Immersive program.
 I decided to make a game similar to a helicopter obstacle game I used to play as a kid.
 I went with a vampire avoiding sunny windows because when I thought it silly and unordinary.
 I have more ideas I would like to come back to later to implement like:
