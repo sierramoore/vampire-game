@@ -1,9 +1,10 @@
 body{
-    background-color: #2a2a2a;
+    background-color: #343434;
     font-family: 'Berkshire Swash', cursive;
 }
 canvas{
     background: linear-gradient(black, #2a2a2a, #1d1d1d, #1d1d1d, #2a2a2a, black);
+    box-shadow: 0 5px 5px 5px black;
 }
 h1{
     color: red;
@@ -30,4 +31,5 @@ h2{
     height: 800px;
     background-image:url("images/castle.gif");
     background-size: cover;
+    box-shadow: 0 5px 5px 5px black;
 }
