@@ -16,5 +16,4 @@ I have more ideas I would like to come back to later to implement like:
 
 #### What did I learn in the process?
 This was my first time using Canvas and through making this game learned a lot about
-manipulating objects on screen, animation, and collision detection. My proudest achievement was figuring out how to make the
-background image appear to move with the animation frame of canvas to feel the motion of the game.
+manipulating objects on screen, animation, and collision detection.
