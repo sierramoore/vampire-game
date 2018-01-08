@@ -5,6 +5,8 @@ const ctx = canvas.getContext('2d');
 //const var bkus vamp needs it too
 const screenBorder = 120;
 
+
+
 let isOverlapped = function(x1,y1,w1,h1,x2,y2,w2,h2){
     //horizontal check first two && && vertical check last two
     //checks for true or false and returns that value
@@ -72,6 +74,7 @@ document.addEventListener('keydown', function(event){
 		vamp.direction = "down";
 	}
 });
+//adding keyup with empty strings reduces lag between key presses
 document.addEventListener('keyup', function(event){
     let key = event.which;
 
@@ -104,8 +107,11 @@ class Game {
         this.imgBackground.src = "images/wall0.jpg";
         this.imgEnd = new Image();
         this.imgEnd.src = "images/background3.png";
-        this.generateWindow();
-        this.animateLoop();
+
+        //add start img
+        this.imgStart = new Image();
+        this.imgStart.src = "images/castle.gif";
+
     }
 
     // function to set random values and output/return/store window object in array of windows
@@ -150,7 +156,7 @@ class Game {
             ctx.drawImage(this.imgWindow, w.x, w.y, w.width, w.height)
         }
     };
-    //  //decrease x for all the windows ("move the windows to the left")
+    //decrease x for all the windows ("move the windows to the left")
     moveWindow(){
         //update all the values of x in windows arr
         for(let i=0; i < this.windows.length; i++){
@@ -217,14 +223,18 @@ class Game {
 
     };
     drawGameOver(){
-
         ctx.drawImage(this.imgEnd, 0, 0, 800, 800);
 
         ctx.font = "80px 'Berkshire Swash'";
         ctx.fillStyle = "red";
         ctx.fillText("Game Over",200,400);
     };
+    startGame(){
+        this.generateWindow();
+        this.animateLoop();
+    }
     animateLoop(){
+
         if(this.health > 0){
             this.moveWindow();
             this.addWindows();
@@ -244,8 +254,30 @@ class Game {
         window.requestAnimationFrame(()=>{ this.animateLoop() })
     }
 }
+
+
 //creates an obj of the class Game
 const game = new Game();
+
+//get intro image
+let introImg = document.getElementById("introImgToggle");
+
+
+//hide canvas so the intro image can display
+canvas.style.display = 'none';
+
+introImg.onclick = function(){
+    //hide the intro image
+    introImg.style.display = 'none';
+    //show the canvas
+    canvas.style.display = '';
+    //start the game
+    game.startGame();
+};
+
+
+
+
 
 
 
