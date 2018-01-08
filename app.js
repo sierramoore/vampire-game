@@ -95,10 +95,7 @@ document.addEventListener('keyup', function(event){
 class Game {
     //constructor is called automatically when game is created
     constructor(){
-        this.windows = [];
-        this.score = -1;
-        this.health = 50;
-        this.speed = 4;
+        this.resetGame();
         this.imgWindow = new Image();
         this.imgWindow.src = "images/window1.png";
         //is x property of canvas tiling
@@ -112,6 +109,16 @@ class Game {
         this.imgStart = new Image();
         this.imgStart.src = "images/castle.gif";
 
+    }
+
+    resetGame() {
+        //move all this to reset game to re-set all stats when you play again
+        //this function is also called in the above constuctor to initialize stats from the first game play
+        this.score = -1;
+        this.health = 50;
+        this.speed = 4;
+        this.windows = [];
+        this.generateWindow();
     }
 
     // function to set random values and output/return/store window object in array of windows
@@ -228,9 +235,12 @@ class Game {
         ctx.font = "80px 'Berkshire Swash'";
         ctx.fillStyle = "red";
         ctx.fillText("Game Over",200,400);
+
+        ctx.font = "20px 'Berkshire Swash'";
+        ctx.fillStyle = "red";
+        ctx.fillText("~click anywhere to play again~",canvas.width / 3,450);
     };
     startGame(){
-        this.generateWindow();
         this.animateLoop();
     }
     animateLoop(){
@@ -275,7 +285,9 @@ introImg.onclick = function(){
     game.startGame();
 };
 
-
+canvas.onclick = function(){
+    game.resetGame();
+};
 
 
 
