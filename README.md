@@ -2,6 +2,8 @@
 ## Vampire Avoiding Sunlit Windows Game
 Hosted on https://sierramoore.github.io/vampire-game/
 
+![Alt Text](vampGame.png)
+
 ### What is this?
 This is a 2D Canvas Game avoiding obstacle game, set in the side perspective moving to the right. The goal is to last as long as you can avoiding windows, as they will quickly decrease your health. The further you make it the higher score you'll get.
 
@@ -17,3 +19,4 @@ I have more ideas I would like to come back to later to implement like:
 #### What did I learn in the process?
 This was my first time using Canvas and through making this game learned a lot about
 manipulating objects on screen, animation, and collision detection.
+
